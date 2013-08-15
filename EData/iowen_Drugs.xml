@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<drugs>
+  <drug>
+    <drugId>1</drugId>
+    <drugName>Drug 1</drugName>
+    <Manufacturer>Manufacturer 1</Manufacturer>
+    <drugType>Drops</drugType>
+    <started></started>
+    <end></end>
+  </drug>
+  <drug>
+    <drugId>2</drugId>
+    <drugName>Drug 2</drugName>
+    <Manufacturer>Manufacturer 2</Manufacturer>
+    <drugType>Drops</drugType>
+    <started></started>
+    <end></end>
+  </drug>
+  <drug>
+    <drugId>3</drugId>
+    <drugName>Drug 3</drugName>
+    <Manufacturer>Manufacturer 3</Manufacturer>
+    <drugType>Drops</drugType>
+    <started></started>
+    <end></end>
+  </drug>
+  <drug>
+    <drugId>4</drugId>
+    <drugName>Drug 4</drugName>
+    <Manufacturer>Manufacturer 4</Manufacturer>
+    <drugType>Drops</drugType>
+    <started></started>
+    <end></end>
+  </drug>
+</drugs>

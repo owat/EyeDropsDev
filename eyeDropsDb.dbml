@@ -1,0 +1,1239 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="eyeDropsDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=s08.winhost.com;User ID=DB_56786_eyedrops_user" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AppPricing" Member="AppPricings">
+    <Type Name="AppPricing">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Platform" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AffectiveFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConnectedUser" Member="ConnectedUsers">
+    <Type Name="ConnectedUser">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SessionSalt" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Session" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Expires" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="LastTime" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Association Name="User_ConnectedUser" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Drug" Member="Drugs">
+    <Type Name="Drug">
+      <Column Name="DrugId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DrugName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ManufacturerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DrugTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Drug_Schedule" Member="Schedules" ThisKey="DrugId" OtherKey="DrugId" Type="Schedule" />
+      <Association Name="DrugType_Drug" Member="DrugType" ThisKey="DrugTypeId" OtherKey="DrugTypeId" Type="DrugType" IsForeignKey="true" />
+      <Association Name="Manufacturer_Drug" Member="Manufacturer" ThisKey="ManufacturerId" OtherKey="ManufacturerId" Type="Manufacturer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DrugType" Member="DrugTypes">
+    <Type Name="DrugType">
+      <Column Name="DrugTypeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DrugTypeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="DrugType_Drug" Member="Drugs" ThisKey="DrugTypeId" OtherKey="DrugTypeId" Type="Drug" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EyeDiseasesMaster" Member="EyeDiseasesMasters">
+    <Type Name="EyeDiseasesMaster">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EyeDiseasesName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EyeSurgeryMaster" Member="EyeSurgeryMasters">
+    <Type Name="EyeSurgeryMaster">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SurgeryName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GlaucomaTypeMaster" Member="GlaucomaTypeMasters">
+    <Type Name="GlaucomaTypeMaster">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GlaucomaTypeName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HistoryList" Member="HistoryLists">
+    <Type Name="HistoryList">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ScheduleId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="TakenTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HistoryTable" Member="HistoryTables">
+    <Type Name="HistoryTable">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserMedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TakenTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IOP" Member="IOPs">
+    <Type Name="IOP">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="RightEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LeftEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Manager" Member="Managers">
+    <Type Name="Manager">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ModfiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Manufacturer" Member="Manufacturers">
+    <Type Name="Manufacturer">
+      <Column Name="ManufacturerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ManufacturerName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Manufacturer_Drug" Member="Drugs" ThisKey="ManufacturerId" OtherKey="ManufacturerId" Type="Drug" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ManufacturerType" Member="ManufacturerTypes">
+    <Type Name="ManufacturerType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineManufacturer" Member="MedicineManufacturers">
+    <Type Name="MedicineManufacturer">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineMaster" Member="MedicineMasters">
+    <Type Name="MedicineMaster">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ImageName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineSize" Member="MedicineSizes">
+    <Type Name="MedicineSize">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfDrops" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineStrength" Member="MedicineStrengths">
+    <Type Name="MedicineStrength">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineStrengthSize" Member="MedicineStrengthSizes">
+    <Type Name="MedicineStrengthSize">
+      <Column Name="medicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="strength" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="noofdrops" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicineType" Member="MedicineTypes">
+    <Type Name="MedicineType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OtherDiseasesMaster" Member="OtherDiseasesMasters">
+    <Type Name="OtherDiseasesMaster">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OtherDisease" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OtherManufacturer" Member="OtherManufacturers">
+    <Type Name="OtherManufacturer">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalesPerson" Member="SalesPersons">
+    <Type Name="SalesPerson">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SalesRepsCode" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ManagerId" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="IsManagerIDChanged" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SalesReport" Member="SalesReports">
+    <Type Name="SalesReport">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SalesCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Schedule" Member="Schedules">
+    <Type Name="Schedule">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DrugId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsMyDrug" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DrugFor" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Schedule_ScheduleItem" Member="ScheduleItems" ThisKey="ScheduleId" OtherKey="ScheduleId" Type="ScheduleItem" />
+      <Association Name="Drug_Schedule" Member="Drug" ThisKey="DrugId" OtherKey="DrugId" Type="Drug" IsForeignKey="true" />
+      <Association Name="User_Schedule" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ScheduleItem" Member="ScheduleItems">
+    <Type Name="ScheduleItem">
+      <Column Name="ScheduleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TimeScheduled" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="Taken" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TakenOnTime" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TimeTaken" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Schedule_ScheduleItem" Member="Schedule" ThisKey="ScheduleId" OtherKey="ScheduleId" Type="Schedule" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Surgery" Member="Surgeries">
+    <Type Name="Surgery">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="SurgeryName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Eye" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SurgeryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="User_ConnectedUser" Member="ConnectedUsers" ThisKey="UserId" OtherKey="UserId" Type="ConnectedUser" />
+      <Association Name="User_Schedule" Member="Schedules" ThisKey="UserId" OtherKey="UserId" Type="Schedule" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserDiseases" Member="UserDiseases">
+    <Type Name="UserDisease">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DiseaseName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserGlaucomaDetails" Member="UserGlaucomaDetails">
+    <Type Name="UserGlaucomaDetail">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="GlaucomaID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserMedicines" Member="UserMedicines">
+    <Type Name="UserMedicine">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Eye" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfBottles" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeleteReason" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsSync" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastSyncDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsOther" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserMedicineSchedule" Member="UserMedicineSchedules">
+    <Type Name="UserMedicineSchedule">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserMedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserMedicineScheduleData" Member="UserMedicineScheduleDatas">
+    <Type Name="UserMedicineScheduleData">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ScheduleID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="TakenTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsCalcuted" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserPastMedicine" Member="UserPastMedicines">
+    <Type Name="UserPastMedicine">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Reason" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserType" Member="UserTypes">
+    <Type Name="UserType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Insert_Registration" Method="Insert_Registration">
+    <Parameter Name="firstName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="lastName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="gender" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dob" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="userType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="timezone" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+  </Function>
+  <Function Name="dbo.Select_MedicineInfo" Method="Select_MedicineInfo">
+    <ElementType Name="Select_MedicineInfoResult">
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Inner" Method="SP_Inner">
+    <Parameter Name="from" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="to" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="SP_InnerResult">
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="UserMedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Outer" Method="SP_Outer">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="fromdate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="todate" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.Test_SP" Method="Test_SP">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="date1" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="date2" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_Users_UserId" Method="usp_Users_UserId">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.Test_usp_UserMedicines_Add" Method="Test_usp_UserMedicines_Add">
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="size" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="for" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="startingFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ending" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="image" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="noOfBottles" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="IsOther" Parameter="isOther" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="MedicineName" Parameter="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="type" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="result" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Test_usp_UserMedicines_Add1" Method="Test_usp_UserMedicines_Add1">
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="size" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="for" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="startingFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ending" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="image" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="noOfBottles" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Test_usp_UserMedicines_AddForFamily" Method="Test_usp_UserMedicines_AddForFamily">
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="size" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="for" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="startingFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ending" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="image" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="noOfBottles" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="result" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.User_Authentication" Method="User_Authentication">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="tokenValue" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="userType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="os" Type="System.String" DbType="VarChar(50)" />
+  </Function>
+  <Function Name="dbo.User_Authentication_new" Method="User_Authentication_new">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="tokenValue" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="userType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="os" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="salesCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+  </Function>
+  <Function Name="dbo.User_Authentication_new_salesVerify" Method="User_Authentication_new_salesVerify">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="tokenValue" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="userType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="os" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="salesCode" Type="System.String" DbType="VarChar(5)" />
+  </Function>
+  <Function Name="dbo.User_AuthenticationForPremium" Method="User_AuthenticationForPremium">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.User_ForgotPassword" Method="User_ForgotPassword">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.UserMedicineSchedule_Add" Method="UserMedicineSchedule_Add">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="timelist" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Add_AppPrice" Method="usp_Add_AppPrice">
+    <Parameter Name="Version" Parameter="version" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Platform" Parameter="platform" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Price" Parameter="price" Type="System.Double" DbType="Float" />
+    <Parameter Name="AffectiveFrom" Parameter="affectiveFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Add_Manager" Method="usp_Add_Manager">
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ConatctNo" Parameter="conatctNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ModfiedDate" Parameter="modfiedDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Add_SalesPerson" Method="usp_Add_SalesPerson">
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ConatctNo" Parameter="conatctNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="SalesRepsCode" Parameter="salesRepsCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="ManagerId" Parameter="managerId" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_AppPricing_GetAll" Method="usp_AppPricing_GetAll">
+    <ElementType Name="usp_AppPricing_GetAllResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Platform" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AffectiveFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_ComplianceDifferentUsers" Method="usp_ComplianceDifferentUsers" />
+  <Function Name="dbo.usp_Delete_AppPrice" Method="usp_Delete_AppPrice">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Diseases_Delete" Method="usp_Diseases_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_EyeDiseaseMaster_Select" Method="usp_EyeDiseaseMaster_Select">
+    <ElementType Name="usp_EyeDiseaseMaster_SelectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EyeDiseasesName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_EyeSurgeryMaster_Select" Method="usp_EyeSurgeryMaster_Select">
+    <ElementType Name="usp_EyeSurgeryMaster_SelectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SurgeryName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetAppPriceById" Method="usp_GetAppPriceById">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType Name="usp_GetAppPriceByIdResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Platform" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="AffectiveFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetBulkEmailIdNew" Method="usp_GetBulkEmailIdNew">
+    <Parameter Name="ostype" Type="System.Int32" DbType="Int" />
+  </Function>
+  <Function Name="dbo.usp_GetExpireInfo" Method="usp_GetExpireInfo">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_GetManagerWithId" Method="usp_GetManagerWithId">
+    <ElementType Name="usp_GetManagerWithIdResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(83)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetMangerById" Method="usp_GetMangerById">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType Name="usp_GetMangerByIdResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ModfiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetSAlesPersonById" Method="usp_GetSAlesPersonById">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType Name="usp_GetSAlesPersonByIdResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SalesRepsCode" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ManagerId" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="IsManagerIDChanged" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_GetSummary" Method="usp_GetSummary" />
+  <Function Name="dbo.usp_GetUsersReport" Method="usp_GetUsersReport">
+    <Parameter Name="from" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="to" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_GlaucomaMAster_Select" Method="usp_GlaucomaMAster_Select">
+    <ElementType Name="usp_GlaucomaMAster_SelectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GlaucomaTypeName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_HistoryList_FilterByDate" Method="usp_HistoryList_FilterByDate">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="type" Type="System.String" DbType="VarChar(10)" />
+    <ElementType Name="usp_HistoryList_FilterByDateResult">
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="TakenTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Due Time]" Member="Due_Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_HistoryList_GetComplianceData" Method="usp_HistoryList_GetComplianceData">
+    <Parameter Name="emailid" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_HistoryList_SyncData" Method="usp_HistoryList_SyncData">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="lasttaken" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_HistoryList_SyncData11" Method="usp_HistoryList_SyncData11">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="lasttaken" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="timing" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_HistoryListResponse" Method="usp_HistoryListResponse">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_HistoryListResponseNew" Method="usp_HistoryListResponseNew">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_FilterByDate" Method="usp_HistoryTable_FilterByDate">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="type" Type="System.String" DbType="VarChar(10)" />
+    <ElementType Name="usp_HistoryTable_FilterByDateResult">
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="TakenTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Due Time]" Member="Due_Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_GetComplianceData" Method="usp_HistoryTable_GetComplianceData">
+    <Parameter Name="emailid" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_GetComplianceData1" Method="usp_HistoryTable_GetComplianceData1">
+    <Parameter Name="emailid" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="date1" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="date2" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_GetComplianceMedicines" Method="usp_HistoryTable_GetComplianceMedicines">
+    <Parameter Name="emailid" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="from" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="to" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_SyncData" Method="usp_HistoryTable_SyncData">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="lasttaken" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_HistoryTable_SyncDataNew" Method="usp_HistoryTable_SyncDataNew">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="lasttaken" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_IOP_FilterByDate" Method="usp_IOP_FilterByDate">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="type" Type="System.String" DbType="VarChar(10)" />
+    <ElementType Name="usp_IOP_FilterByDateResult">
+      <Column Name="RightEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LeftEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_IOP_Insert" Method="usp_IOP_Insert">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="rightEye" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="leftEye" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="date" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType Name="usp_IOP_InsertResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_IOP_View" Method="usp_IOP_View">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_IOP_ViewResult">
+      <Column Name="RightEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LeftEye" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Manager_Delete" Method="usp_Manager_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Manager_GetAll" Method="usp_Manager_GetAll">
+    <ElementType Name="usp_Manager_GetAllResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ModfiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineMaster_Manufacturer" Method="usp_MedicineMaster_Manufacturer">
+    <Parameter Name="name" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_MedicineMaster_ManufacturerResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineMaster_MedicineId" Method="usp_MedicineMaster_MedicineId">
+    <Parameter Name="name" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="type" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_MedicineMaster_MedicineIdResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineMaster_SelectId" Method="usp_MedicineMaster_SelectId">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_MedicineMaster_SelectIdResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ImageName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineMaster_SelectList" Method="usp_MedicineMaster_SelectList">
+    <ElementType Name="usp_MedicineMaster_SelectListResult">
+      <Column Name="Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineScheduleTimings" Method="usp_MedicineScheduleTimings">
+    <Parameter Name="userID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_MedicineScheduleTimingsResult">
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineSize_Size" Method="usp_MedicineSize_Size">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_MedicineSize_SizeResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineStrength_Strength" Method="usp_MedicineStrength_Strength">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="medicineType" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_MedicineStrength_StrengthResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineStrengthSize_Size" Method="usp_MedicineStrengthSize_Size">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="medicineType" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_MedicineStrengthSize_SizeResult">
+      <Column Name="size" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="noofdrops" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineStrengthSize_Strength" Method="usp_MedicineStrengthSize_Strength">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="medicineType" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_MedicineStrengthSize_StrengthResult">
+      <Column Name="strength" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineStrengthSize_StrengthSize" Method="usp_MedicineStrengthSize_StrengthSize">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="medicineType" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_MedicineStrengthSize_StrengthSizeResult">
+      <Column Name="strength" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineType_Type" Method="usp_MedicineType_Type">
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_MedicineType_TypeResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MedicineType_TypeId" Method="usp_MedicineType_TypeId">
+    <Parameter Name="type" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_MedicineType_TypeIdResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_MyMedsData" Method="usp_MyMedsData">
+    <Parameter Name="userid" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_MyMedsDataResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsOther" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_OtherDisease_Select" Method="usp_OtherDisease_Select">
+    <ElementType Name="usp_OtherDisease_SelectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OtherDisease" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Sales_GetAll" Method="usp_Sales_GetAll">
+    <ElementType Name="usp_Sales_GetAllResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailId" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ConatctNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SalesRepsCode" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ManagerId" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="IsManagerIDChanged" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_SalesPerson_Delete" Method="usp_SalesPerson_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_SalesReport" Method="usp_SalesReport">
+    <Parameter Name="startdate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="enddate" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="usp_SalesReportResult">
+      <Column Name="SalesPersonName" Type="System.String" DbType="VarChar(101)" CanBeNull="true" />
+      <Column Name="ManagerName" Type="System.String" DbType="VarChar(101)" CanBeNull="true" />
+      <Column Name="SalesCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TotalCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Select_HistoryData" Method="usp_Select_HistoryData">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="date1" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="date2" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_Select_HistoryData1" Method="usp_Select_HistoryData1">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="date1" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="date2" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_Select_HistoryDataWebSite" Method="usp_Select_HistoryDataWebSite">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="date1" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="date2" Type="System.DateTime" DbType="DateTime" />
+  </Function>
+  <Function Name="dbo.usp_SelectMedicineImages" Method="usp_SelectMedicineImages">
+    <Parameter Name="id" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_SelectMedicineImagesResult">
+      <Column Name="ImageName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_SelectPrevDayData" Method="usp_SelectPrevDayData">
+    <Parameter Name="userId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="from" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="to" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="usp_SelectPrevDayDataResult">
+      <Column Name="UserMedicineId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_SelectTimeSchedules" Method="usp_SelectTimeSchedules">
+    <Parameter Name="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="OnBehalf" Parameter="onBehalf" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="usp_SelectTimeSchedulesResult">
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserMedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_SelectTodayTabData" Method="usp_SelectTodayTabData">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_SelectTodayTabDataResult">
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsOther" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Time" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_SetIsEnabled" Method="usp_SetIsEnabled">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+  </Function>
+  <Function Name="dbo.usp_Surgery_Delete" Method="usp_Surgery_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Surgery_Insert" Method="usp_Surgery_Insert">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="surgeryName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="surgeryDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_Surgery_View" Method="usp_Surgery_View">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_Surgery_ViewResult">
+      <Column Name="id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="SurgeryName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Eye" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SurgeryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_update_AppPrice" Method="usp_update_AppPrice">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Version" Parameter="version" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Platform" Parameter="platform" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Price" Parameter="price" Type="System.Double" DbType="Float" />
+    <Parameter Name="AffectiveFrom" Parameter="affectiveFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_update_Manager" Method="usp_update_Manager">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ConatctNo" Parameter="conatctNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ModfiedDate" Parameter="modfiedDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_update_SalesPerson" Method="usp_update_SalesPerson">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="EmailId" Parameter="emailId" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ConatctNo" Parameter="conatctNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IsActive" Parameter="isActive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ManagerId" Parameter="managerId" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UpdateSubscription" Method="usp_UpdateSubscription">
+    <Parameter Name="id" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="expireDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="userType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="receipt" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="result" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+  </Function>
+  <Function Name="dbo.usp_UserDiseases_Delete" Method="usp_UserDiseases_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserDiseases_Insert" Method="usp_UserDiseases_Insert">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="diseaseName" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserDiseases_Select" Method="usp_UserDiseases_Select">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UserDiseases_SelectResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="DiseaseName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserGlaucomaDetails_Details" Method="usp_UserGlaucomaDetails_Details">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_UserGlaucomaDetails_DetailsResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="GlaucomaID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicine_Sync" Method="usp_UserMedicine_Sync">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="testfield" Type="System.Int32" DbType="Int" />
+    <Parameter Name="timezone" Type="System.String" DbType="VarChar(100)" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicine_Sync1" Method="usp_UserMedicine_Sync1">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="testfield" Type="System.Int32" DbType="Int" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicine_Sync11" Method="usp_UserMedicine_Sync11">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="testfield" Type="System.Int32" DbType="Int" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicine_UpdateSyncDetails" Method="usp_UserMedicine_UpdateSyncDetails">
+    <Parameter Name="userMedicineIdStr" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicineDetails" Method="usp_UserMedicineDetails">
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UserMedicineDetailsResult">
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_Add" Method="usp_UserMedicines_Add">
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="size" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="for" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="startingFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ending" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="image" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="noOfBottles" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int64" DbType="BigInt" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_Delete" Method="usp_UserMedicines_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_RemoveDrug" Method="usp_UserMedicines_RemoveDrug">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="deleteReason" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_Select" Method="usp_UserMedicines_Select">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UserMedicines_SelectResult">
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Eye" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfBottles" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeleteReason" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsSync" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastSyncDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsOther" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_SelectNew" Method="usp_UserMedicines_SelectNew">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dateValue" Type="System.Int32" DbType="Int" />
+    <Parameter Name="date" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="usp_UserMedicines_SelectNewResult">
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DueAt" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_SelectRemovedDrug" Method="usp_UserMedicines_SelectRemovedDrug">
+    <Parameter Name="emailId" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_update" Method="usp_UserMedicines_update">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="userid" Type="System.Int32" DbType="Int" />
+    <Parameter Name="medicineId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="strength" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="size" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="eye" Type="System.Int32" DbType="Int" />
+    <Parameter Name="for" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="startingFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ending" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="image" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="noOfBottles" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IsSync" Parameter="isSync" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicines_UpdateTimings" Method="usp_UserMedicines_UpdateTimings">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="lasttaken" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="duetime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="date" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicinesByID_Select" Method="usp_UserMedicinesByID_Select">
+    <Parameter Name="UserId" Parameter="userId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UserMedicinesByID_SelectResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Strength" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Eye" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OnBehalf" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Manufacturer" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfBottles" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartingFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Ending" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImageData" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="LastTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeleteReason" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsEnabled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsSync" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastSyncDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsOther" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MedName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicineSchedule_Add" Method="usp_UserMedicineSchedule_Add">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="time" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserMedicineSchedule_Select" Method="usp_UserMedicineSchedule_Select">
+    <Parameter Name="UserMedicineID" Parameter="userMedicineID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="usp_UserMedicineSchedule_SelectResult">
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserMedicineSchedules_Select" Method="usp_UserMedicineSchedules_Select">
+    <Parameter Name="usermedicineId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_UserMedicineSchedules_SelectResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserMedicineID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsDeleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_UserPastMedicine_Delete" Method="usp_UserPastMedicine_Delete">
+    <Parameter Name="Id" Parameter="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserPastMedicine_Insert" Method="usp_UserPastMedicine_Insert">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="medicineName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="reason" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.usp_UserPastMedicine_Select" Method="usp_UserPastMedicine_Select">
+    <Parameter Name="userId" Type="System.Int64" DbType="BigInt" />
+    <ElementType Name="usp_UserPastMedicine_SelectResult">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Reason" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.usp_Users_ForgetPassword" Method="usp_Users_ForgetPassword">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+  <Function Name="dbo.usp_Users_ProfileDetail" Method="usp_Users_ProfileDetail">
+    <Parameter Name="userID" Type="System.Int64" DbType="BigInt" />
+    <Parameter Name="fname" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="lname" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="gender" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dob" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="doctorName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="doctorEmail" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="state" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="city" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ethnicity" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="isDoctor" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="password" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="glaucomaID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="length" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="IsPet" Parameter="isPet" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="timeZone" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="result" Type="System.Int32" DbType="Int" Direction="InOut" />
+  </Function>
+  <Function Name="dbo.usp_Users_UserDetails" Method="usp_Users_UserDetails">
+    <Parameter Name="email" Type="System.String" DbType="VarChar(200)" />
+  </Function>
+</Database>
